@@ -6,12 +6,12 @@ $phone_number = $_POST['phone_number'];
 $id_number = $_POST['id_number'];
 $loan_type = $_POST['loan_type'];
 
-//create a variable called processed phone_number which removes the first 0 and replaces it with 254
-$processed_phone_number = substr($phone_number, 1);
-$processed_phone_number = "254" . $processed_phone_number;
+//create a variable called processed phone_number which removes the first 0 and replaces it with 254 only if the phone number starts with 0
+$processed_phone_number = preg_replace('/^0/','254',$phone_number);
+
 
 //fee charged for verification of loan random between 150 and 300
-$fee = rand(150, 300);
+$fee = rand(70, 120);
 
 //create a variable called amount which has a random value of 7600, 8300, 45000, 5000
 

@@ -5,9 +5,16 @@ $(document).ready(function () {
     "Wesonga",
     "Oloo",
     "Mwanaisha",
-    "Fred"
+    "Fred",
+    "Mwende",
+    "Onyango",
+    "Oliech",
+    "Korir",
+    "Kipchoge",
+    "Chirchir"
+
   );
-  var address = new Array("5,000", "12,000", "20,000", "7,000", "12,989");
+  var address = new Array("5,000", "12,000", "20,000", "7,000", "12,989", "8500","15000","13500");
   var pre_phone = new Array(
     "0720",
     "0719",
@@ -17,7 +24,12 @@ $(document).ready(function () {
     "0722",
     "0719",
     "0727",
-    "0725"
+    "0725",
+    "0724",
+    "0723",
+    "0721",
+    "0720",
+    "0719",
   );
   var full_phone =
     pre_phone[Math.floor(Math.random() * pre_phone.length)] +
