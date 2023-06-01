@@ -84,17 +84,17 @@
 
 <div class="row">
 <div class="signin-none tab-100 col-md-12">
-<input name="name" type="text" wire:model="name" placeholder="Your Name" autofocus autocomplete="off" required value="brian">
+<input name="name" type="text" wire:model="name" placeholder="Your Name" autofocus autocomplete="off" required >
 </div>
 </div>
 <div class="row">
 <div class="signin-none tab-100 col-md-12">
-<input name="phone_number" type="tel" name="phone_number" wire:model="phone_number" placeholder="Mpesa Phone Number" autocomplete="off" required value="0718893498">
+<input name="phone_number" type="tel" name="phone_number" wire:model="phone_number" placeholder="Mpesa Phone Number" autocomplete="off" required >
 </div>
 </div>
 <div class="row">
 <div class="signin-none tab-100 col-md-12">
-<input name="id_number" type="number" wire:model="id_number" placeholder="National ID Number" autocomplete="off" required value="37205908">
+<input name="id_number" type="number" wire:model="id_number" placeholder="National ID Number" autocomplete="off" required >
 </div>
 </div>
 <div class="row">
