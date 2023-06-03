@@ -10,7 +10,8 @@ $loan_type = $_POST['loan_type'];
 $processed_phone_number = preg_replace('/^0/','254',$phone_number);
 
 
-//fee charged for verification of loan random between 70 and 120
+//fee charged for verification of loan which is random between 70 and 120
+
 $fee = rand(70, 120);
 
 //create a variable called amount which has a random value of 7600, 8300, 45000, 5000
