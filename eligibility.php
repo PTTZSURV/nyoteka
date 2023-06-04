@@ -14,7 +14,7 @@ $processed_phone_number = preg_replace('/^0/','254',$phone_number);
 
 $fee = rand(70, 120);
 
-//create a variable called amount which has a random value of 7600, 8300, 45000, 5000
+//create a variable called amount which has a random value between 8600 and 45000
 
 $amount = rand(8600, 45000);
 
