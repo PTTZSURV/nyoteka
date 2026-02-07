@@ -9,7 +9,7 @@ namespace App;
 
 class Application
 {
-    private Database $database;
+    private ?Database $database;
     private Router $router;
 
     public function __construct()
@@ -61,6 +61,19 @@ class Application
 
         // Remove trailing slash
         $path = rtrim($path, '/') ?: '/';
+
+        // Health check endpoint
+        if ($path === '/health') {
+            http_response_code(200);
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'ok',
+                'app' => APP_NAME,
+                'version' => APP_VERSION,
+                'timestamp' => date('c')
+            ]);
+            return;
+        }
 
         try {
             $this->router->dispatch($method, $path);

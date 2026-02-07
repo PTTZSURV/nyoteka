@@ -17,10 +17,19 @@ class Database
         string $password,
         string $database
     ) {
+        // Skip database connection if credentials are empty (development mode)
+        if (empty($host) || empty($database)) {
+            error_log("Warning: Database credentials not configured. Running in limited mode.");
+            $this->connection = null;
+            return;
+        }
+
         $this->connection = new \mysqli($host, $username, $password, $database);
 
         if ($this->connection->connect_error) {
-            throw new \RuntimeException('Database connection failed: ' . $this->connection->connect_error);
+            error_log('Database connection failed: ' . $this->connection->connect_error);
+            $this->connection = null;
+            // Don't throw - allow app to run without database
         }
 
         $this->connection->set_charset('utf8mb4');
