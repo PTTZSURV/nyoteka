@@ -1,7 +1,4 @@
-FROM php:8.2-apache
-
-# Enable PHP Apache modules
-RUN a2enmod rewrite
+FROM php:8.2-cli
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -14,28 +11,13 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-install mysqli
 
 # Set working directory
-WORKDIR /var/www/html
+WORKDIR /app
 
 # Copy application files
-COPY . /var/www/html/
-
-# Set proper permissions
-RUN chown -R www-data:www-data /var/www/html
-
-# Configure Apache to use index-modern.php as entry point
-RUN echo '<Directory /var/www/html>\n\
-    RewriteEngine On\n\
-    RewriteCond %{REQUEST_FILENAME} !-f\n\
-    RewriteCond %{REQUEST_FILENAME} !-d\n\
-    RewriteRule ^ index-modern.php [QSA,L]\n\
-    Options Indexes FollowSymLinks\n\
-    AllowOverride All\n\
-    Require all granted\n\
-</Directory>' > /etc/apache2/conf-available/app.conf && \
-    a2enconf app
+COPY . /app/
 
 # Expose port
-EXPOSE 80
+EXPOSE 3000
 
-# Start Apache
-CMD ["apache2-foreground"]
+# Start PHP built-in server
+CMD ["php", "-S", "0.0.0.0:3000", "index-modern.php"]
