@@ -1,0 +1,10 @@
+{
+  "name": "nyoteka/mpesa-loans",
+  "description": "M-Pesa Loans Application",
+  "require": {
+    "php": "^8.0"
+  },
+  "require-dev": {
+    "php": "^8.0"
+  }
+}
