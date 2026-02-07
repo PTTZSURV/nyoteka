@@ -19,5 +19,5 @@ COPY . /app/
 # Expose port
 EXPOSE 3000
 
-# Start PHP built-in server
-CMD ["php", "-S", "0.0.0.0:3000", "index-modern.php"]
+# Use PORT environment variable if set, default to 3000
+CMD php -S 0.0.0.0:${PORT:-3000} router.php

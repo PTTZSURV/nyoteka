@@ -1,0 +1,11 @@
+.git
+.gitignore
+.env
+.env.local
+node_modules
+vendor
+.DS_Store
+.vscode
+*.log
+error_log
+.well-known
