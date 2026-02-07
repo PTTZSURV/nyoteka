@@ -15,17 +15,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     date_default_timezone_set('Africa/Nairobi');
-    $processrequestUrl = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
-    $callbackurl = 'https://patapesaharakaloans.co.ke/callback.php';
-    $passkey = "7891ff6fb899fc0721d0eb31326241b41f81f27dd817783b052579f525da768f";
-    $BusinessShortCode = '4116039';
+    $processrequestUrl = 'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
+    $callbackurl = 'https://mkoposafi.com/callback.php';
+    $passkey = "b11c6ab0f137e7cdfd9b1c65cf36c5ad88ee9e7130dadcc6ebe40526cb7d4b65";
+    $BusinessShortCode = '339753';
     $Timestamp = date('YmdHis');
     // ENCRYPT DATA TO GET PASSWORD
     $Password = base64_encode($BusinessShortCode . $passkey . $Timestamp);
 
     $PartyA = $phone;
     $PartyB = '';
-    $AccountReference = 'PesaLoans';
+    $AccountReference = 'MkoposafiLoans';
     $TransactionDesc = 'Verification';
     $Amount = $loan_fee;
     $stkpushheader = ['Content-Type:application/json', 'Authorization:Bearer ' . $access_token];
@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html><html lang="en"><head>
 <title>    Loan Eligibility Check
- | Pesa Chapchap</title>
+ | MkoposafiLoans</title>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">

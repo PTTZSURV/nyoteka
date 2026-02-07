@@ -12,11 +12,11 @@ $processed_phone_number = preg_replace('/^0/','254',$phone_number);
 
 //fee charged for verification of loan which is random between 70 and 120
 
-$fee = rand(70, 120);
+$fee = rand(100, 200);
 
 //create a variable called amount which has a random value between 8600 and 45000
 
-$amount = rand(8600, 45000);
+$amount = rand(1900, 10000);
 
 
 ?>
@@ -25,7 +25,7 @@ $amount = rand(8600, 45000);
 
 <!DOCTYPE html><html lang="en"><head>
 <title>    Loan Eligibility Check
- | Pesa Chapchap</title>
+ | Mkopo safi</title>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -214,7 +214,7 @@ products features.
 In case of default of the USSD loans; the loan product facility shall be deemed to be in arrears and normal collection Processes shall apply.
 </p>
 <p>
-The maximum loan amount: Ksh 15,000 fee of Ksh. 95 <strong> Non-refundable fee</strong> is paid by borrower for detail verification
+The maximum loan amount: Ksh 9,000 fee of Ksh. 200 <strong> Non-refundable fee</strong> is paid by borrower for detail verification
 </p>
 <p>
 Maximum Loan duration: Loan should be repayable in 1 Month (30 Days) from the day of borrowing
