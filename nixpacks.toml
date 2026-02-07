@@ -1,4 +1,2 @@
-providers = ["php"]
-
-[providers.php]
+[php]
 version = "8.2"
