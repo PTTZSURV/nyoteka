@@ -1,1 +1,1 @@
-web: vendor/bin/heroku-php-apache2 /
+web: /usr/bin/php -S 0.0.0.0:${PORT:-8080} -t .
