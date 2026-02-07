@@ -1,10 +1,11 @@
 {
   "name": "nyoteka/mpesa-loans",
-  "description": "M-Pesa Loans Application",
+  "description": "M-Pesa Loans Application - Modern PHP",
   "require": {
-    "php": "^8.0"
+    "php": "^8.2"
   },
   "require-dev": {
-    "php": "^8.0"
+    "php": "^8.2"
   }
 }
+
